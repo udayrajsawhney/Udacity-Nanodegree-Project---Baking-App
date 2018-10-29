@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view_ingredients"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/size"
+    android:layout_marginEnd="@dimen/size"
+    card_view:cardCornerRadius="@dimen/size_xs">
+
+    <LinearLayout
+        android:id="@+id/ingredients_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/ingredient_card_view_background"
+        android:padding="@dimen/size"
+        android:orientation="vertical" />
+</android.support.v7.widget.CardView>

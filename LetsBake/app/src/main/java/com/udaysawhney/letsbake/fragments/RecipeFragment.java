@@ -1,6 +1,5 @@
 package com.udaysawhney.letsbake.fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
