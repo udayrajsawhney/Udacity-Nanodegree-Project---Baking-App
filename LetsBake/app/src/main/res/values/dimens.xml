@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="size_xl">28dp</dimen>
+    <dimen name="size_l">16dp</dimen>
+    <dimen name="size">8dp</dimen>
+    <dimen name="size_xs">2dp</dimen>
+    <dimen name="size_zero">0dp</dimen>
+
+    <dimen name="single_line_item_height">48dp</dimen>
+    <dimen name="content_text_size">16sp</dimen>
+    <dimen name="card_view_text_size">24sp</dimen>
+    <dimen name="card_view_height">200dp</dimen>
+    <integer name="grid_view_landscape_column_number">3</integer>
+
+    <dimen name="step_navigation_bar_height">64dp</dimen>
+    <dimen name="exo_player_height">250dp</dimen>
+    <dimen name="widget_height">288dp</dimen>
+    <dimen name="widget_width">272dp</dimen>
+    <dimen name="widget_title_height">50dp</dimen>
+</resources>

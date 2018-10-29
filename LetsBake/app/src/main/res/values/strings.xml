@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Baking App</string>
+    <string name="content_description_recipe_image">Recipe image</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="steps">Steps</string>
+    <string name="content_description_button_prev">Previous</string>
+    <string name="content_description_button_next">next</string>
+    <string name="content_description_step_exo_player_thumbnail">Step Exo Player Thumbnail</string>
+    <string name="content_description_application_logo">Application Logo</string>
+</resources>

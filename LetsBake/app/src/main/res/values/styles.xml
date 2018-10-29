@@ -1,0 +1,44 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="CardView.Content.SansSerifNormal" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">@dimen/card_view_text_size</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">"sans-serif-normal"</item>
+    </style>
+
+    <style name="Title.SansSerifMedium" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/primary_text_color</item>
+        <item name="android:fontFamily">"sans-serif-medium"</item>
+    </style>
+
+    <style name="Content.SansSerifNormal" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">@dimen/content_text_size</item>
+        <item name="android:textColor">@color/primary_text_color</item>
+        <item name="android:fontFamily">"sans-serif-normal"</item>
+    </style>
+
+    <style name="Content.Black.SansSerifNormal" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">@dimen/content_text_size</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">"sans-serif-normal"</item>
+    </style>
+
+    <style name="Step.Indicator.Title.SansSerifNormal" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:fontFamily">"sans-serif-normal"</item>
+    </style>
+
+    <style name="Widget.Title.SansSerifNormal" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">"sans-serif-normal"</item>
+    </style>
+
+</resources>
