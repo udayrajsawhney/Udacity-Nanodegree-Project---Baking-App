@@ -8,15 +8,21 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.android.exoplayer2.C;
 import com.udaysawhney.letsbake.adapters.RecipeDetailAdapter;
 import com.udaysawhney.letsbake.fragments.RecipeDetailFragment;
+import com.udaysawhney.letsbake.fragments.StepDetailFragment;
 import com.udaysawhney.letsbake.model.Constants;
 import com.udaysawhney.letsbake.model.Recipe;
+import com.udaysawhney.letsbake.model.Step;
 
 import java.util.ArrayList;
 
 import static com.udaysawhney.letsbake.model.Constants.INTENT_EXTRA_NAME_STEP_DETAILS_INDEX;
 import static com.udaysawhney.letsbake.model.Constants.INTENT_EXTRA_NAME_STEP_DETAILS_STEP_LIST;
+import static com.udaysawhney.letsbake.model.Constants.STEP_DETAILS_FRAGMENT_ARGUMENT;
+import static com.udaysawhney.letsbake.model.Constants.STEP_DETAILS_FRAGMENT_FULLSCREEN_ARGUMENT;
+import static com.udaysawhney.letsbake.model.Constants.STEP_DETAILS_FRAGMENT_VIDEO_POSITION_ARGUMENT;
 
 public class RecipeDetailActivity extends AppCompatActivity implements RecipeDetailAdapter.ListItemClickListener {
 
@@ -29,7 +35,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
     private int stepSelectedIndex = 0;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
         fragmentManager = getSupportFragmentManager();
@@ -50,6 +56,17 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
         recipe = data.getParcelable(Constants.INTENT_EXTRA_NAME_RECIPE_DETAILS);
         updateActionBar();
         openRecipeDetailFragment();
+        if (isLargeScreen()) {
+            openStepDetailFragment(stepSelectedIndex);
+        }
+    }
+
+    private void loadFromSavedInstanceState(Bundle savedInstanceState) {
+        recipe = savedInstanceState.getParcelable(SAVED_RECIPE_KEY);
+        recipeDetailFragment = (RecipeDetailFragment) fragmentManager.
+                findFragmentById(R.id.recipe_details_fragment_container);
+        stepSelectedIndex = savedInstanceState.getInt(SAVED_STEP_SELECTED_INDEX_KEY, 0);
+        recipeDetailFragment.setSelectionIndex(stepSelectedIndex);
     }
 
     private void updateActionBar() {
@@ -69,12 +86,36 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
                 .commit();
     }
 
-    private void loadFromSavedInstanceState(Bundle savedInstanceState) {
-        recipe = savedInstanceState.getParcelable(SAVED_RECIPE_KEY);
-        recipeDetailFragment = (RecipeDetailFragment) fragmentManager.
-                findFragmentById(R.id.recipe_details_fragment_container);
-        stepSelectedIndex = savedInstanceState.getInt(SAVED_STEP_SELECTED_INDEX_KEY, 0);
-        recipeDetailFragment.setSelectionIndex(stepSelectedIndex);
+    @Override
+    public void onListItemClick(int index) {
+        if (isLargeScreen()) {
+            this.stepSelectedIndex = index;
+            openStepDetailFragment(index);
+            return;
+        }
+        Intent intent = new Intent(this, StepDetailActivity.class);
+        intent.putParcelableArrayListExtra(INTENT_EXTRA_NAME_STEP_DETAILS_STEP_LIST, new ArrayList<>(recipe.getSteps()));
+        intent.putExtra(INTENT_EXTRA_NAME_STEP_DETAILS_INDEX, index);
+        startActivity(intent);
+    }
+
+    private void openStepDetailFragment(int index) {
+        Step step = recipe.getSteps().get(index);
+        recipeDetailFragment.setSelectionIndex(index);
+        Bundle args = new Bundle();
+        args.putParcelable(STEP_DETAILS_FRAGMENT_ARGUMENT, step);
+        args.putBoolean(STEP_DETAILS_FRAGMENT_FULLSCREEN_ARGUMENT, false);
+        args.putLong(STEP_DETAILS_FRAGMENT_VIDEO_POSITION_ARGUMENT, C.TIME_UNSET);
+        final StepDetailFragment stepDetailFragment = new StepDetailFragment();
+        stepDetailFragment.setArguments(args);
+        fragmentManager.beginTransaction()
+                .replace(R.id.step_details_fragment_container, stepDetailFragment)
+                .commit();
+    }
+
+    private boolean isLargeScreen() {
+        return findViewById(R.id.activity_recipe_detail).getTag() != null &&
+                findViewById(R.id.activity_recipe_detail).getTag().equals("sw600");
     }
 
     @Override
@@ -82,13 +123,5 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
         outState.putParcelable(SAVED_RECIPE_KEY, recipe);
         outState.putInt(SAVED_STEP_SELECTED_INDEX_KEY, stepSelectedIndex);
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onListItemClick(int index) {
-        Intent intent = new Intent(this, StepDetailActivity.class);
-        intent.putParcelableArrayListExtra(INTENT_EXTRA_NAME_STEP_DETAILS_STEP_LIST, new ArrayList<>(recipe.getSteps()));
-        intent.putExtra(INTENT_EXTRA_NAME_STEP_DETAILS_INDEX, index);
-        startActivity(intent);
     }
 }

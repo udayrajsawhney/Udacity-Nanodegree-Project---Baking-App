@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_recipe_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_background"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal"
+    android:padding="@dimen/size"
+    android:tag="sw600"
+    tools:context="com.udaysawhney.letsbake.RecipeDetailActivity"
+    android:baselineAligned="false">
+
+    <FrameLayout
+        android:id="@+id/recipe_details_fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.4"
+        android:scaleType="centerInside">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/step_details_fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.6"
+        android:padding="@dimen/size_xl"
+        android:scaleType="centerInside" />
+
+</LinearLayout>
