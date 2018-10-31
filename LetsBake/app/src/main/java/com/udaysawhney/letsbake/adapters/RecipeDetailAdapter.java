@@ -24,12 +24,19 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private Recipe recipe;
     private int selectedIndex = -1;
 
+    final private ListItemClickListener listItemClickListener;
+
     private final int TITLE_TYPE = 0;
     private final int INGREDIENT_TYPE = 1;
     private final int STEP_TYPE = 2;
 
-    public RecipeDetailAdapter(Context context) {
+    public interface ListItemClickListener {
+        void onListItemClick(int index);
+    }
+
+    public RecipeDetailAdapter(Context context, ListItemClickListener listItemClickListener) {
         this.context = context;
+        this.listItemClickListener = listItemClickListener;
     }
 
     public void setRecipeData(Recipe recipe) {
@@ -55,11 +62,10 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         Context context = viewGroup.getContext();
-        switch (i) {
+        switch (viewType) {
             case TITLE_TYPE:
                 return getTitleViewHolder(context, viewGroup);
             case INGREDIENT_TYPE:
@@ -91,24 +97,32 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        switch (viewHolder.getItemViewType()) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        switch (holder.getItemViewType()) {
             case TITLE_TYPE:
-                TitleViewHolder titleViewHolder = (TitleViewHolder) viewHolder;
-                String title = context.getString(i == 0 ? R.string.ingredients : R.string.steps);
+                TitleViewHolder titleViewHolder = (TitleViewHolder) holder;
+                String title = context.getString(position == 0 ? R.string.ingredients : R.string.steps);
                 titleViewHolder.textView.setText(title);
                 break;
             case INGREDIENT_TYPE:
                 break;
             case STEP_TYPE:
-                int index = i - 3;
-                StepViewHolder stepViewHolder = (StepViewHolder) viewHolder;
+                int index = position - 3;
+                StepViewHolder stepViewHolder = (StepViewHolder) holder;
                 Step step = recipe.getSteps().get(index);
                 stepViewHolder.textView.setText(step.getShortDescription());
                 int color = selectedIndex == index ? R.color.lightTeal : R.color.veryLightGreen;
                 stepViewHolder.cardView.setBackgroundColor(context.getResources().getColor(color));
                 break;
         }
+    }
+
+    @Override
+    public int getItemCount() {
+        int titlesCount = 2;
+        int ingredientsCount = recipe.getIngredients() != null ? 1 : 0;
+        int stepsCount = recipe.getSteps() != null ? recipe.getSteps().size() : 0;
+        return titlesCount + ingredientsCount + stepsCount;
     }
 
     class TitleViewHolder extends RecyclerView.ViewHolder {
@@ -146,17 +160,10 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 parentLayout.addView(view);
             }
         }
+
     }
 
-    @Override
-    public int getItemCount() {
-        int titlesCount = 2;
-        int ingredientsCount = recipe.getIngredients() != null ? 1 : 0;
-        int stepsCount = recipe.getSteps() != null ? recipe.getSteps().size() : 0;
-        return titlesCount + ingredientsCount + stepsCount;
-    }
-
-    class StepViewHolder extends RecyclerView.ViewHolder{
+    class StepViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.short_description)
         TextView textView;
@@ -167,6 +174,17 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         private StepViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            int index = getAdapterPosition();
+            if (index < 3) {
+                return;
+            }
+            listItemClickListener.onListItemClick(index - 3);
+        }
+
     }
 }

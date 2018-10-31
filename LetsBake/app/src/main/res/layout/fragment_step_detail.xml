@@ -1,0 +1,42 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.udaysawhney.letsbake.fragments.StepDetailFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/fragment_background"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:orientation="vertical">
+
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/step_video_player"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/exo_player_height"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/step_exo_player_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/exo_player_height"
+                android:contentDescription="@string/content_description_step_exo_player_thumbnail"
+                android:scaleType="fitCenter"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/step_description"
+            style="@style/Content.Black.SansSerifNormal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size_l" />
+    </LinearLayout>
+
+</ScrollView>

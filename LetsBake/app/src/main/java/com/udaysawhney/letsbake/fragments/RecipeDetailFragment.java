@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.udaysawhney.letsbake.R;
+import com.udaysawhney.letsbake.RecipeDetailActivity;
 import com.udaysawhney.letsbake.adapters.RecipeDetailAdapter;
 import com.udaysawhney.letsbake.model.Constants;
 import com.udaysawhney.letsbake.model.Recipe;
@@ -46,7 +47,7 @@ public class RecipeDetailFragment extends Fragment {
         Recipe recipe = getArguments().getParcelable(Constants.RECIPE_DETAILS_FRAGMENT_ARGUMENT);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        recipeDetailAdapter = new RecipeDetailAdapter(getContext());
+        recipeDetailAdapter = new RecipeDetailAdapter(getContext(),(RecipeDetailActivity)getActivity());
         recyclerView.setAdapter(recipeDetailAdapter);
         recipeDetailAdapter.setRecipeData(recipe);
         restoreViewState();

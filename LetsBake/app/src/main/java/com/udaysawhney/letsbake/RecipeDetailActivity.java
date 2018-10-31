@@ -8,11 +8,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
+import com.udaysawhney.letsbake.adapters.RecipeDetailAdapter;
 import com.udaysawhney.letsbake.fragments.RecipeDetailFragment;
 import com.udaysawhney.letsbake.model.Constants;
 import com.udaysawhney.letsbake.model.Recipe;
 
-public class RecipeDetailActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+import static com.udaysawhney.letsbake.model.Constants.INTENT_EXTRA_NAME_STEP_DETAILS_INDEX;
+import static com.udaysawhney.letsbake.model.Constants.INTENT_EXTRA_NAME_STEP_DETAILS_STEP_LIST;
+
+public class RecipeDetailActivity extends AppCompatActivity implements RecipeDetailAdapter.ListItemClickListener {
 
     private Recipe recipe;
     private FragmentManager fragmentManager;
@@ -78,4 +84,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public void onListItemClick(int index) {
+        Intent intent = new Intent(this, StepDetailActivity.class);
+        intent.putParcelableArrayListExtra(INTENT_EXTRA_NAME_STEP_DETAILS_STEP_LIST, new ArrayList<>(recipe.getSteps()));
+        intent.putExtra(INTENT_EXTRA_NAME_STEP_DETAILS_INDEX, index);
+        startActivity(intent);
+    }
 }
