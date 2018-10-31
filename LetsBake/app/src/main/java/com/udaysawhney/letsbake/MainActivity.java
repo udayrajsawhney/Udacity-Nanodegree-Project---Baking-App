@@ -3,12 +3,17 @@ package com.udaysawhney.letsbake;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.udaysawhney.letsbake.adapters.RecipeAdapter;
+import com.udaysawhney.letsbake.idling_resource.SimpleIdlingResource;
 import com.udaysawhney.letsbake.model.Ingredient;
 import com.udaysawhney.letsbake.model.Recipe;
 import com.udaysawhney.letsbake.widget.ListRemoteViewsService;
@@ -21,13 +26,16 @@ import static com.udaysawhney.letsbake.model.Constants.WIDGET_EXTRA_NAME_QUANTIT
 
 public class MainActivity extends AppCompatActivity implements RecipeAdapter.ListItemClickListener {
 
+    @Nullable
+    private SimpleIdlingResource idlingResource;
+
     private int appWidgetId;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)  {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Log.d("Check","In main activity");
         setContentView(R.layout.activity_main);
+        Log.d("Check","In main activity");
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
@@ -79,5 +87,15 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Lis
         intent.putStringArrayListExtra(WIDGET_EXTRA_NAME_INGREDIENT, ingredientList);
         intent.putStringArrayListExtra(WIDGET_EXTRA_NAME_QUANTITY, quantityList);
         return intent;
+    }
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        Log.d("Check","In main activity idling");
+        if (idlingResource == null) {
+            idlingResource = new SimpleIdlingResource();
+        }
+        return idlingResource;
     }
 }
