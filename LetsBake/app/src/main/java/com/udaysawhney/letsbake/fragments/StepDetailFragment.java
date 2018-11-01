@@ -170,7 +170,7 @@ public class StepDetailFragment extends Fragment {
                         .createMediaSource(mediaUri);
         exoPlayer.prepare(mediaSource);
         exoPlayer.seekTo(videoLastPosition);
-        exoPlayer.setPlayWhenReady(videoPlayed);
+        exoPlayer.setPlayWhenReady(videoPlayed); // setPlayWhenReady being handled appropriately
     }
 
     public boolean isFullScreen() {
