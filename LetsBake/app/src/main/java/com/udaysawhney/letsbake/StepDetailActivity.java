@@ -136,15 +136,6 @@ public class StepDetailActivity extends AppCompatActivity {
         nextButton.setVisibility(nextStatus ? View.VISIBLE : View.INVISIBLE);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private boolean isFullScreen() {
 //        boolean fullScreen = (!getResources().getBoolean(R.bool.isTablet)
         return (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
@@ -177,12 +168,4 @@ public class StepDetailActivity extends AppCompatActivity {
                 .commit();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (isFullScreen() && stepDetailFragment.isFullScreen()) {
-            updateStep(activePosition, true, false);
-        } else {
-            super.onBackPressed();
-        }
-    }
 }
